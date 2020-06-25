@@ -1,0 +1,26 @@
+# Individual Commands to start up docker containers
+
+first --
+docker run --rm --name pgsql -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypass -e POSTGRES_DB=mydb -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres
+
+second -- 
+docker run --rm --name transportation -d -p 8080:8080 -it bananaforscale/transportation
+
+
+
+
+
+
+./add-user.sh -u 'sysadm' -p 'password'
+
+./jboss-cli.sh --connect --controller=localhost:9990
+
+./jboss-cli.sh --connect --controller=localhost:9990 --user=sysadm --password=mypass
+
+/opt/wildfly/bin/jboss-cli.sh -c --controller=localhost:9990 --command="deploy /opt/wildfly/standalone/deployments/helloworld.war"
+
+
+module add --name=org.postgresql --resources=/opt/jboss/wildfly/modules/org/postgresql/main/postgresql-42.2.5.jar --dependencies=javax.api,javax.transaction.api
+
+
+/home/ptdunlap/temp/transportation-tutorial/config/db

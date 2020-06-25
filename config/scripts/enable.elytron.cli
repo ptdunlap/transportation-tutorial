@@ -1,0 +1,16 @@
+# Batch script to setup the elytron credential store
+# To run: ./jboss-cli.sh --connect --file=enable-elytron.cli
+
+# Start batching commands
+batch
+
+# Create the Credential store and add the keystore and truststore references
+/subsystem=elytron/credential-store=jboss-cred-store:add(location="cred-stores/jboss-cred-store.jceks", relative-to=jboss.server.config.dir,  credential-reference={clear-text=credstore-pw},create=true)
+/subsystem=elytron/credential-store=jboss-cred-store:add-alias(alias=keystore-pw, secret-value="mypass")
+/subsystem=elytron/credential-store=jboss-cred-store:add-alias(alias=truststore-pw, secret-value="mypass")
+
+# Run the batch commands
+run-batch
+
+# Reload the server configuration
+reload

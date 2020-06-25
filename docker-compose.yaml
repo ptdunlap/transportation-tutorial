@@ -1,0 +1,25 @@
+version: '3'
+services:
+    psql-server:
+        image: 'postgres'
+        ports:
+            - "5432:5432"
+        environment:
+            - POSTGRES_USER=myuser
+            - POSTGRES_PASSWORD=mypass
+            - POSTGRES_DB=mydb
+    jboss-server:
+        build: .
+        image: bananaforscale/transportation
+        ports:
+            - "8080:8080"
+            - "9990:9990"
+        container_name: jboss-server
+    jboss-config:
+        image: bananaforscale/transportation
+        container_name: jboss-config
+        depends_on:
+            - jboss-server
+        command: >
+            bash -c "/opt/jboss/wildfly/config/scripts/configure.sh
+            && echo --- Jboss configuration completed ---"
