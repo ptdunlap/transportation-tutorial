@@ -17,7 +17,8 @@ services:
             - "8080:8080"
             - "9990:9990"
         environment: 
-            - DATASOURCE_SERVER=psql-server
+            - DATASOURCE_HOST=psql-server
+            - DATASOURCE_PORT=5432
             - DATASOURCE_DATABASE=mydb
             - DATASOURCE_USER=myuser
             - DATASOURCE_PASSWORD=mypass

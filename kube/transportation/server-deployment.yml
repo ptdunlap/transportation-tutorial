@@ -18,3 +18,18 @@ spec:
                   imagePullPolicy: Never
                   ports:
                       - containerPort: 8080
+                  env:
+                      - name: DATASOURCE_HOST
+                        value: postgres-cluster-ip-service
+                      - name: DATASOURCE_PORT
+                        value: '5432'
+                      - name: DATASOURCE_DATABASE
+                        value: mydb
+                      - name: DATASOURCE_USER
+                        value: myuser
+                      - name: DATASOURCE_PASSWORD
+                        valueFrom: 
+                            secretKeyRef:
+                                name: postgres-creds
+                                key: password
+

@@ -4,8 +4,10 @@ first --
 docker run --rm --name pgsql -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypass -e POSTGRES_DB=mydb -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres
 
 second -- 
-docker run --rm --name transportation -d -p 8080:8080 -it -e DATASOURCE_SERVER=psql-server -e DATASOURCE_DATABASE=mydb -e DATASOURCE_USER=myuser -e DATASOURCE_PASSWORD=mypass bananaforscale/transportation
+docker run --rm --name transportation -d -p 8080:8080 -it -e DATASOURCE_HOST=psql-server -e DATASOURCE_PORT=5432 -e DATASOURCE_DATABASE=mydb -e DATASOURCE_USER=myuser -e DATASOURCE_PASSWORD=mypass bananaforscale/transportation
 
+# Kube Secret for PostgreSQL password
+kubectl create secret generic postgres-creds --from-literal password=mypass
 
 
 
