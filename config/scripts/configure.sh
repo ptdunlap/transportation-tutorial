@@ -6,6 +6,7 @@ if test -f "$FILE"; then
   exit 0;
 fi
 
+# Enable variable resolution in Jboss CLI
 sed -i -e "s/<resolve-parameter-values>false/<resolve-parameter-values>true/" $JBOSS_HOME/bin/jboss-cli.xml
 
 # ADD SYSADM USER
@@ -28,12 +29,6 @@ printenv > /opt/jboss/wildfly/bin/env.properties
 
 # Deploy the Web Archive
 ln -s /var/deployments/transportation-service.war $JBOSS_HOME/standalone/deployments/transportation-service.war
-
-# REMOTE
-# /bin/bash $JBOSS_HOME/bin/jboss-cli.sh --connect --controller=jboss-server:9990 --user=sysadm --password=mypass --file=/opt/jboss/wildfly/config/scripts/enable.elytron.cli
-# /bin/bash $JBOSS_HOME/bin/jboss-cli.sh --connect --controller=jboss-server:9990 --user=sysadm --password=mypass --file=/opt/jboss/wildfly/config/scripts/init-db.cli
-# /bin/bash $JBOSS_HOME/bin/jboss-cli.sh --connect --controller=jboss-server:9990 --user=sysadm --password=mypass --file=/opt/jboss/wildfly/config/scripts/create-db.cli
-# /bin/bash $JBOSS_HOME/bin/jboss-cli.sh --connect --controller=jboss-server:9990 --user=sysadm --password=mypass --file=/opt/jboss/wildfly/config/scripts/deploy.cli
 
 # cleanup
 rm /opt/jboss/wildfly/bin/env.properties
