@@ -5,10 +5,10 @@
 batch
 
 # Create the credential alias
-/subsystem=elytron/credential-store=jboss-cred-store:add-alias(alias=mydb-pw, secret-value="mypass")
+/subsystem=elytron/credential-store=jboss-cred-store:add-alias(alias=mydb-pw, secret-value=${DATASOURCE_PASSWORD})
 
 # Add the data source
-data-source add --name=mydb --driver-name=postgresql --connection-url=jdbc:postgresql://psql-server:5432/mydb --jndi-name=java:jboss/datasources/mydb --driver-class=org.postgresql.Driver --use-ccm=false --jta=true --enabled=true --user-name=myuser --credential-reference={store=jboss-cred-store, alias=mydb-pw}
+data-source add --name=${DATASOURCE_DATABASE} --driver-name=postgresql --connection-url=jdbc:postgresql://${DATASOURCE_SERVER}:5432/${DATASOURCE_DATABASE} --jndi-name=java:jboss/datasources/${DATASOURCE_DATABASE} --driver-class=org.postgresql.Driver --use-ccm=false --jta=true --enabled=true --user-name=${DATASOURCE_USER} --credential-reference={store=jboss-cred-store, alias=mydb-pw} --check-valid-connection-sql="SELECT 1" --background-validation=true --background-validation-millis=60000 --flush-strategy=IdleConnections --allocation-retry=10 --allocation-retry-wait-millis=5000
 
 # Run the batch commands
 run-batch

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: wildfly-node-port-service
+spec:
+    type: NodePort
+    ports:
+        - port: 3050
+          targetPort: 8080
+          nodePort: 31515
+    selector:
+        component: web

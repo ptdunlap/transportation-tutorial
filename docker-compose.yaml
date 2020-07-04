@@ -1,7 +1,8 @@
 version: '3'
 services:
     psql-server:
-        image: 'postgres'
+        image: postgres
+        container_name: psql-server
         ports:
             - "5432:5432"
         environment:
@@ -11,15 +12,12 @@ services:
     jboss-server:
         build: .
         image: bananaforscale/transportation
+        container_name: jboss-server
         ports:
             - "8080:8080"
             - "9990:9990"
-        container_name: jboss-server
-    jboss-config:
-        image: bananaforscale/transportation
-        container_name: jboss-config
-        depends_on:
-            - jboss-server
-        command: >
-            bash -c "/opt/jboss/wildfly/config/scripts/configure.sh
-            && echo --- Jboss configuration completed ---"
+        environment: 
+            - DATASOURCE_SERVER=psql-server
+            - DATASOURCE_DATABASE=mydb
+            - DATASOURCE_USER=myuser
+            - DATASOURCE_PASSWORD=mypass

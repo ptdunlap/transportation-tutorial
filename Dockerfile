@@ -3,11 +3,16 @@
 # Specify a base image
 FROM jboss/wildfly
 
-COPY config/postgresql /opt/jboss/wildfly/modules/org/postgresql
-COPY config/scripts /opt/jboss/wildfly/config/scripts
+# Set the working directory
+WORKDIR /opt/jboss/wildfly
+
+# Copy files over
+COPY config/postgresql modules/org/postgresql
+COPY config/scripts config/scripts
 COPY service/transportation-service/target/transportation-service.war /var/deployments/transportation-service.war
 
-RUN /bin/sh -c '/opt/jboss/wildfly/bin/add-user.sh sysadm mypass --silent'
+# Jboss will expose 8080 and 9990
+EXPOSE 8080 9990
 
 # Default command
-CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0"]
+CMD ["/bin/bash", "-c", "\"/opt/jboss/wildfly/config/scripts/configure-and-run.sh\""]
