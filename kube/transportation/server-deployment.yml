@@ -26,10 +26,13 @@ spec:
                       - name: DATASOURCE_DATABASE
                         value: mydb
                       - name: DATASOURCE_USER
-                        value: myuser
+                        valueFrom: 
+                            secretKeyRef:
+                                name: postgres-secret
+                                key: username
                       - name: DATASOURCE_PASSWORD
                         valueFrom: 
                             secretKeyRef:
-                                name: postgres-creds
+                                name: postgres-secret
                                 key: password
 

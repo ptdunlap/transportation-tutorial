@@ -29,9 +29,12 @@ spec:
                       - name: POSTGRES_DB
                         value: mydb
                       - name: POSTGRES_USER
-                        value: myuser
+                        valueFrom: 
+                            secretKeyRef:
+                                name: postgres-secret
+                                key: username
                       - name: POSTGRES_PASSWORD
                         valueFrom: 
                             secretKeyRef:
-                                name: postgres-creds
+                                name: postgres-secret
                                 key: password
