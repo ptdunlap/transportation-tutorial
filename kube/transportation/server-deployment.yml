@@ -15,7 +15,7 @@ spec:
             containers:
                 - name: transportation
                   image: bananaforscale/transportation
-#                  imagePullPolicy: Never
+                  imagePullPolicy: Never
                   ports:
                       - containerPort: 8080
                   env:

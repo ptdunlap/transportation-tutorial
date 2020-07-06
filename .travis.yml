@@ -14,20 +14,20 @@ cache:
     - $HOME/.m2
 before_cache:
   - rm -rf $HOME/.m2/repository/org/bananaforscale
-before_install:
-    - openssl aes-256-cbc -K $encrypted_9f3b5599b056_key -iv $encrypted_9f3b5599b056_iv -in service-account.json.enc -out service-account.json -d
-    - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; curl https://sdk.cloud.google.com | bash > /dev/null; fi
-    - source $HOME/google-cloud-sdk/path.bash.inc
-    - gcloud components update kubectl
-    - gcloud auth activate-service-account --key-file service-account.json
-    - gcloud config set project graphite-maker-282419
-    - gcloud config set compute/zone us-west1-a
-    - gcloud container clusters get-credentials transportation-cluster
-    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+#before_install:
+#    - openssl aes-256-cbc -K $encrypted_key -iv $encrypted_iv -in service-account.json.enc -out service-account.json -d
+#    - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; curl https://sdk.cloud.google.com | bash > /dev/null; fi
+#    - source $HOME/google-cloud-sdk/path.bash.inc
+#    - gcloud components update kubectl
+#    - gcloud auth activate-service-account --key-file service-account.json
+#    - gcloud config set project graphite-maker-282419
+#    - gcloud config set compute/zone us-west1-a
+#    - gcloud container clusters get-credentials transportation-cluster
+#    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
-deploy:
-    skip_cleanup: true
-    provider: script
-    script: bash ./config/scripts/deploy.sh
-    on:
-        branch: master
+#deploy:
+#    skip_cleanup: true
+#    provider: script
+#    script: bash ./config/scripts/deploy.sh
+#    on:
+#        branch: master
