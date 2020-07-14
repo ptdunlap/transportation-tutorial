@@ -1,0 +1,22 @@
+# Configures a Wildfly data source for PostgreSQL. All environment variables (ex. ${VAR}) must be defined in the "env.properties" file
+# To Run: /bin/bash $JBOSS_HOME/bin/jboss-cli.sh --properties=~/env.properties --file=~/configure-datasource.cli
+
+embed-server --server-config=standalone.xml --std-out=echo
+
+# Create the Credential store and add the keystore and truststore references
+/subsystem=elytron/credential-store=jboss-cred-store:add(location="cred-stores/jboss-cred-store.jceks", relative-to=jboss.server.config.dir,  credential-reference={clear-text=credstore-pw},create=true)
+
+# Remove default H2 database
+/subsystem=ee/service=default-bindings:write-attribute(name=datasource,value=undefined)
+/subsystem=datasources/data-source=ExampleDS:remove
+
+# Add the postgresql driver
+/subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql,driver-class-name=org.postgresql.Driver)
+
+# Create the credential alias
+/subsystem=elytron/credential-store=jboss-cred-store:add-alias(alias=mydb-pw, secret-value=${DATASOURCE_PASSWORD})
+
+# Add the data source
+data-source add --name=${DATASOURCE_DATABASE} --driver-name=postgresql --connection-url=jdbc:postgresql://${DATASOURCE_HOST}:${DATASOURCE_PORT}/${DATASOURCE_DATABASE} --jndi-name=java:jboss/datasources/${DATASOURCE_DATABASE} --driver-class=org.postgresql.Driver --use-ccm=false --jta=true --enabled=true --user-name=${DATASOURCE_USER} --credential-reference={store=jboss-cred-store, alias=mydb-pw} --check-valid-connection-sql="SELECT 1" --background-validation=true --background-validation-millis=60000 --flush-strategy=IdleConnections --allocation-retry=10 --allocation-retry-wait-millis=5000
+
+stop-embedded-server

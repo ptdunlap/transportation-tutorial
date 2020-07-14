@@ -9,7 +9,7 @@ WORKDIR /opt/jboss/wildfly
 # Copy files over
 COPY config/postgresql modules/org/postgresql
 COPY config/scripts config/scripts
-COPY service/transportation-service/target/transportation-service.war /var/deployments/transportation-service.war
+COPY target/transportation-service.war /var/deployments/transportation-service.war
 
 # Jboss will expose 8080 and 9990
 EXPOSE 8080 9990

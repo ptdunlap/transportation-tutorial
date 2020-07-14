@@ -10,7 +10,9 @@ services:
             - POSTGRES_PASSWORD=mypass
             - POSTGRES_DB=mydb
     jboss-server:
-        build: .
+        build: 
+            context: ./service/transportation-service
+            dockerfile: Dockerfile
         image: bananaforscale/transportation
         container_name: jboss-server
         ports:
