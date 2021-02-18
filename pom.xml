@@ -11,7 +11,7 @@
 
     <properties>
         <transportation.version>1.0.0-SNAPSHOT</transportation.version>
-        <jackson.version>2.10.4</jackson.version>
+        <jackson.version>2.12.1</jackson.version>
         <resteasy.version>3.12.1.Final</resteasy.version>
         <slf4j.version>1.7.30</slf4j.version>
         <enunciate.version>2.13.1</enunciate.version>
